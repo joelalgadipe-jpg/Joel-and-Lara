@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="rose">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Joel &amp; Lara</title>
+<meta name="theme-color" content="#ffe8f0">
+<script>try{document.documentElement.dataset.theme=JSON.parse(localStorage.getItem('jl-theme'))||'rose'}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Playfair+Display:wght@500;600&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💖</text></svg>">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="hearts" id="hearts" aria-hidden="true"></div>
+
+<!-- ===================== LOGIN ===================== -->
+<section id="login" class="screen">
+  <div class="login-card">
+    <div class="monogram">J<span>♥</span>L</div>
+    <h1 class="script">Joel &amp; Lara</h1>
+    <p id="loginSub" class="muted">Our little corner of the world</p>
+
+    <form id="loginForm" autocomplete="on">
+      <div class="who">
+        <label><input type="radio" name="who" value="Joel"><span>👦 Joel</span></label>
+        <label><input type="radio" name="who" value="Lara"><span>👧 Lara</span></label>
+      </div>
+      <input class="in" type="password" id="pw" placeholder="Password" required>
+      <input class="in" type="password" id="pw2" placeholder="Confirm password" hidden>
+      <label class="check"><input type="checkbox" id="keep" checked> Keep me logged in on this device</label>
+      <button class="btn primary block" type="submit" id="loginBtn">Enter 💕</button>
+      <p id="loginMsg" class="msg" role="alert"></p>
+    </form>
+  </div>
+</section>
+
+<!-- ===================== APP ===================== -->
+<div id="app" hidden>
+  <header class="topbar">
+    <a class="brand script" href="#home">Joel &amp; Lara</a>
+    <nav id="nav" aria-label="Main">
+      <button data-page="home"><i>🏠</i><span>Home</span></button>
+      <button data-page="gallery"><i>📸</i><span>Gallery</span></button>
+      <button data-page="story"><i>💌</i><span>Our Story</span></button>
+      <button data-page="favorites"><i>💖</i><span>Favorites</span></button>
+      <button data-page="bucket"><i>✅</i><span>Bucket List</span></button>
+    </nav>
+    <button id="logout" class="btn ghost small">Log out</button>
+  </header>
+
+  <main class="wrap">
+
+    <!-- ============ HOME ============ -->
+    <section id="page-home" class="page">
+      <div class="hero">
+        <p id="hello" class="hello"></p>
+        <div class="duo">
+          <button class="avatar" data-who="Joel" type="button" aria-label="Joel's photo"></button>
+          <span class="duo-heart beat">♥</span>
+          <button class="avatar" data-who="Lara" type="button" aria-label="Lara's photo"></button>
+        </div>
+        <h2 class="script big">Joel <span class="beat">♥</span> Lara</h2>
+        <p class="muted">Together, one day at a time</p>
+        <p class="muted small-text tap-hint">Tap a circle to add your photos 📷</p>
+        <div id="counter" class="counter"></div>
+        <label class="anniv">Our day:
+          <input type="date" id="annivInput" class="in slim">
+        </label>
+      </div>
+
+      <div id="countdowns" class="countdowns"></div>
+
+      <div class="quote card"><p id="quote"></p></div>
+
+      <div id="backupNudge" class="card nudge" hidden>
+        <span>💾 It's been a while. Download a backup so your memories are safe!</span>
+        <button class="btn primary small" id="nudgeBtn" type="button">Download backup</button>
+      </div>
+
+      <div class="home-grid">
+        <div id="motd" class="card motd" hidden></div>
+        <div class="card notes-card">
+          <h3>Love notes 💌</h3>
+          <form id="noteForm" class="row nowrap">
+            <input class="in" type="text" id="noteText" maxlength="200" placeholder="Leave a sweet note for each other…" required>
+            <button class="btn primary small" type="submit">Post</button>
+          </form>
+          <div id="notes" class="notes"></div>
+        </div>
+      </div>
+
+      <div class="stats">
+        <div class="card stat"><b id="statPhotos">0</b><span>📸 Photos</span></div>
+        <div class="card stat"><b id="statStories">0</b><span>💌 Story entries</span></div>
+        <div class="card stat"><b id="statFavs">0</b><span>💖 Favorites filled</span></div>
+        <div class="card stat"><b id="statBucket">0/0</b><span>✅ Bucket list done</span></div>
+      </div>
+
+      <details class="card settings">
+        <summary>⚙️ Settings &amp; backup</summary>
+        <div class="settings-grid">
+          <div>
+            <h3>Theme</h3>
+            <div id="themes" class="themes">
+              <button type="button" data-theme="rose" style="--c:#e8668b" aria-label="Rose"></button>
+              <button type="button" data-theme="lavender" style="--c:#9b7be0" aria-label="Lavender"></button>
+              <button type="button" data-theme="peach" style="--c:#f08a5d" aria-label="Peach"></button>
+              <button type="button" data-theme="sky" style="--c:#4f9de0" aria-label="Sky"></button>
+              <button type="button" data-theme="mint" style="--c:#3fb58f" aria-label="Mint"></button>
+            </div>
+          </div>
+          <form id="pwForm">
+            <h3>Change password</h3>
+            <input class="in" type="password" id="curPw" placeholder="Current password" required>
+            <input class="in" type="password" id="newPw" placeholder="New password" required>
+            <button class="btn primary small" type="submit">Change</button>
+          </form>
+          <div>
+            <h3>Backup</h3>
+            <p class="muted small-text">Your photos are saved inside this browser. Download a backup now and then so nothing gets lost 💾</p>
+            <p class="muted small-text" id="lastBackup"></p>
+            <div class="row">
+              <button class="btn ghost small" id="exportBtn" type="button">⬇️ Download backup</button>
+              <label class="btn ghost small">⬆️ Restore backup
+                <input type="file" id="importInput" accept="application/json,.json" hidden>
+              </label>
+            </div>
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <!-- ============ GALLERY ============ -->
+    <section id="page-gallery" class="page">
+      <div class="page-head">
+        <div>
+          <h2>Our Gallery 📸</h2>
+          <p class="muted" id="photoCount">0 memories</p>
+        </div>
+        <label class="btn primary">＋ Add photos
+          <input type="file" id="fileInput" accept="image/*" multiple hidden>
+        </label>
+      </div>
+
+      <div id="dropzone" class="dropzone">
+        <div class="dz-inner">
+          <span class="dz-emoji">🖼️</span>
+          <p><b>Drag &amp; drop</b> your photos here, or tap to choose</p>
+          <small>No limit on how many pictures 💗</small>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <input class="in" type="search" id="gSearch" placeholder="🔍 Search captions…">
+        <select class="in" id="gSort" aria-label="Sort photos">
+          <option value="new">Newest added</option>
+          <option value="old">Oldest added</option>
+          <option value="taken">Date taken</option>
+        </select>
+        <div class="chips" id="gChips">
+          <button type="button" class="chip active" data-f="all">All</button>
+          <button type="button" class="chip" data-f="love">❤️ Loved</button>
+        </div>
+      </div>
+
+      <p id="emptyGallery" class="empty">No photos yet. Upload your first memory together ✨</p>
+      <div id="grid" class="grid"></div>
+    </section>
+
+    <!-- ============ STORY ============ -->
+    <section id="page-story" class="page">
+      <div class="page-head">
+        <div>
+          <h2>Our Story 💌</h2>
+          <p class="muted">Write down every chapter of us</p>
+        </div>
+      </div>
+      <div class="story-wrap">
+        <form id="storyForm" class="card story-form">
+          <h3 id="storyFormTitle">Write a new chapter</h3>
+          <input type="hidden" id="storyId">
+          <input type="hidden" id="storyMood">
+          <input class="in" type="text" id="storyTitle" placeholder="Title (e.g. The day we met)" maxlength="120">
+          <input class="in" type="date" id="storyDate">
+          <div>
+            <p class="small-label">How did it feel?</p>
+            <div class="moods" id="moods">
+              <button type="button" data-m="🥰">🥰</button><button type="button" data-m="😍">😍</button>
+              <button type="button" data-m="😂">😂</button><button type="button" data-m="🥹">🥹</button>
+              <button type="button" data-m="😢">😢</button><button type="button" data-m="🤗">🤗</button>
+              <button type="button" data-m="✨">✨</button>
+            </div>
+          </div>
+          <textarea class="in" id="storyText" rows="8" placeholder="Our story goes here…"></textarea>
+          <div id="storySlot" class="story-slot"></div>
+          <p id="draftNote" class="muted small-text" hidden>Draft restored ✏️</p>
+          <div class="row">
+            <button class="btn primary" type="submit" id="storySave">Save to our story 💌</button>
+            <button class="btn ghost" type="button" id="storyCancel" hidden>Cancel</button>
+          </div>
+        </form>
+        <div>
+          <p id="storyEmpty" class="empty">Your story starts here. Write the first chapter 💭</p>
+          <div id="storyList" class="story-list"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FAVORITES ============ -->
+    <section id="page-favorites" class="page">
+      <div class="page-head">
+        <div>
+          <h2>Our Favorites 💖</h2>
+          <p class="muted">Add words, photos and colors for everything you love</p>
+        </div>
+        <span id="saveState" class="save-state">All saved ✓</span>
+      </div>
+
+      <div id="matchBanner" class="match-banner" hidden></div>
+
+      <h3 class="section-title">Joel vs Lara</h3>
+      <div id="favGrid" class="fav-grid"></div>
+
+      <h3 class="section-title">Just the two of us</h3>
+      <div id="togetherGrid" class="fav-grid"></div>
+
+      <form id="addFavForm" class="card add-fav">
+        <h3>Add your own category ✨</h3>
+        <div class="row nowrap">
+          <input class="in emoji-in" type="text" id="favEmoji" value="💗" maxlength="4" aria-label="Emoji">
+          <input class="in" type="text" id="favLabel" placeholder="e.g. Favorite cartoon" maxlength="40" required>
+          <button class="btn primary" type="submit">Add</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- ============ BUCKET LIST ============ -->
+    <section id="page-bucket" class="page">
+      <div class="page-head">
+        <div>
+          <h2>Our Bucket List ✅</h2>
+          <p class="muted">Dreams we'll tick off together</p>
+        </div>
+      </div>
+      <div class="card bucket-top">
+        <div class="bucket-progress-text"><b id="bkText">0 of 0 done</b><span id="bkPct">0%</span></div>
+        <div class="progress"><i id="bkBar" style="--p:0%"></i></div>
+        <form id="bkForm" class="row nowrap">
+          <input class="in" type="text" id="bkInput" maxlength="120" placeholder="Add something we want to do together…" required>
+          <button class="btn primary" type="submit">Add</button>
+        </form>
+        <div class="chips ideas" id="bkIdeas"></div>
+      </div>
+      <p id="bkEmpty" class="empty">Your list is empty. Add your first dream ✨</p>
+      <ul id="bkList" class="bk-list"></ul>
+    </section>
+
+  </main>
+
+  <footer class="foot">Made with 💖 for the two of us</footer>
+</div>
+
+<!-- LIGHTBOX -->
+<div id="lightbox" class="lightbox" hidden>
+  <button class="lb-nav lb-prev" id="lbPrev" aria-label="Previous">‹</button>
+  <div class="lb-body">
+    <div class="lb-top"><span id="lbCount"></span><button class="lb-love" id="lbLove" type="button" aria-label="Love this photo">♥</button></div>
+    <img id="lbImg" alt="">
+    <div class="lb-panel">
+      <input class="in" type="text" id="lbCap" placeholder="Write a caption…" maxlength="200">
+      <span id="lbDate" class="lb-date"></span>
+      <div class="row">
+        <button class="btn ghost small" id="lbPlay" type="button">▶ Play</button>
+        <button class="btn ghost small" id="lbDown" type="button">⬇️ Save</button>
+        <button class="btn danger small" id="lbDel" type="button">🗑 Delete</button>
+        <button class="btn primary small" id="lbClose" type="button">Close</button>
+      </div>
+    </div>
+  </div>
+  <button class="lb-nav lb-next" id="lbNext" aria-label="Next">›</button>
+</div>
+
+<!-- PHOTO PICKER -->
+<div id="picker" class="modal" hidden>
+  <div class="modal-card">
+    <div class="modal-head">
+      <h3 id="pickerTitle">Choose a photo</h3>
+      <button class="x" id="pickerClose" type="button" aria-label="Close">✕</button>
+    </div>
+    <div class="row">
+      <label class="btn primary small">📤 Upload from device
+        <input type="file" id="pickerFile" accept="image/*" hidden>
+      </label>
+      <button class="btn danger small" id="pickerRemove" type="button" hidden>Remove photo</button>
+    </div>
+    <p class="muted small-text pick-hint">…or pick one from our gallery:</p>
+    <div id="pickerGrid" class="picker-grid"></div>
+  </div>
+</div>
+
+<div id="toast" class="toast" role="status"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
